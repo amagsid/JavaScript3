@@ -26,15 +26,28 @@ body {
   justify-content: space-evenly;
 }
 
+#headers {
+  display: flex;
+  flex-direction: column;
+}
 
 .header p {
   margin:.5rem;
   font-size: 1.75rem;
 }
 
+.error{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #ff5456;
+  color: white;
+  height: 1vh;
+  width: 100%;
+}
+
 select {
   margin-bottom: 10px;
-  /* styling */
   font-size: 1rem;
 	font-weight: 600;
 	color: #4253af;
@@ -88,9 +101,65 @@ select:focus {
 
 
 .contributor {
+  display: flex;
+  align-items:center;
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .2);
   margin-bottom: .5rem;
   padding:1rem;
+}
+
+.avatar {
+  flex-grow: 1;
+  
+}
+
+
+  a {
+   
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+
+  a {
+    background-color:   #4253af;
+    color: white;
+    padding: .25em .25em;
+   /* text-decoration: none; */
+    text-transform: uppercase;
+    border-radius: 7px;
+  }
+  
+  a:hover {
+    background-color:white;
+    color: #4253af;
+  }
+  
+  a:active {
+    background-color: #ccc ;
+  }
+  
+  a:visited {
+    background-color:  rgba(59, 153, 252, .7);
+  }
+
+  
+
+
+.user-id {
+  flex-grow: 2;
+}
+
+.square{
+background-color: #4253af;
+max-width: 40px;
+border-radius: 5px;
+text-align: center;
+color:white;
+flex-grow: 1;
+
+
+
 }
 
 tr {

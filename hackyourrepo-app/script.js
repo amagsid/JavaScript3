@@ -1,29 +1,25 @@
 "use strict";
 
-//complete populating HTML contributoer elements
-//sort alphabeticlly
-//change date format
-//add Network error div
-//change functions to arrow functions
-
-
 //main function
-function main(){
+let main = () => {
   document.body.innerHTML += 
   `<div class="container">
+
+<div id="headers"> 
       <section class="header"> 
         <p> HYF Repositories </p>
         <select id="repo-select"> 
           <option class="placeholder" value="" disabled selected hidden>Choose a repo..</option>
         </select>
       </section>
+      </div> 
       
       <div class="info">
         <section class="info__details">
           <table>
             <tr>
               <td class="table__header">Repository:</td>
-              <td class="repo__details" id="repo-name">  </td>
+               <td class="repo__details" id="repo-name"><a id="repo-link">  </a>  </td> 
             </tr>
 
             <tr>
@@ -52,7 +48,6 @@ function main(){
     //grabbing the drop down menu elements
     let optionSelect = document.getElementById('repo-select');
     //grabing HTML text elements to fill based on selection
-    let repoName = document.getElementById('repo-name');
     let repoDescription = document.getElementById('repo-description');
     let forksNumber = document.getElementById('repo-forks');
     let dateUpdated = document.getElementById('updated');
@@ -65,30 +60,59 @@ function main(){
     fetch(GitHubURL)
     
     .then((response) => {
-    console.log('response is here');
+    if (response.ok) {
     return response.json();
+    } else {
+     
+      let errorDiv = document.createElement('div');
+      let errorWarning = document.createElement('h4');
+      errorWarning.style.fontWeight = '400';
+      errorWarning.innerText = 'Error: Network request failed';
+      errorDiv.appendChild(errorWarning);
+      //styling error div and assinging an .error class to it
+      let headers = document.getElementById('headers');
+      headers.appendChild(errorDiv);
+      errorDiv.classList.add("error");
+      //error handling
+      throw new Error('Something went wrong');
+    } 
   })
+
   
   .then((jsonData)=> {
+    
     console.log(jsonData);
-    function populateHTML(){
+
+    let populateHTML = () => {
       //setting the color of the dropdown menu options to blue
       optionSelect.style.color = '#4253af';
 
+      //sorting thre response alphabetically
+      jsonData.sort((a, b) => a.name.localeCompare(b.name));
+
       //function to iterate over array elements and show repo names in dropdown menu
-      jsonData.forEach(function(element){
-        let option = document.createElement('option');
-        optionSelect.appendChild(option);
-        option.innerHTML = element.name;
-        
+      jsonData.forEach((element) => {
+      let option = document.createElement('option');
+      optionSelect.appendChild(option);
+      option.innerHTML = element.name;
+      
         if (optionSelect.value == element.name) {
-          repoName.innerText = element.name;
+          //creating a link to the GitHub Repo
+          let a = document.getElementById('repo-link');
+          a.innerText = `go to ${element.name}`;
+          a.href = element.html_url;
+          //setting the target attribute to the link so it opens in s seperate tab 
+          let att = document.createAttribute("target");
+          att.value = "_blank";
+          a.setAttributeNode(att);
+          //populating other HTML info elements
           repoDescription.innerText = element.description;
           forksNumber.innerText = element.forks;
-          dateUpdated.innerText = element.updated_at;
+          let date = new Date(element.updated_at);
+          dateUpdated.innerText = date;
 
           //function to get contributors info API
-          function getContribResponse(repo){
+          let getContribResponse = (repo) => {
             const contribResponse = 'https://api.github.com/repos/HackYourFuture/'+repo+'/contributors';
             fetch(contribResponse)
 
@@ -98,18 +122,44 @@ function main(){
             
             .then((jsonData) => {
               console.log(jsonData);
-              jsonData.forEach(function(element){
-                //create new div
+              jsonData.forEach((element)=> {
+                //create and append contributor div, img and p tag for useIDs
                 let contDiv = document.createElement('div');
                 let avatar = document.createElement('img');
+                let userID = document.createElement('p');
+                let contribNum = document.createElement('h4');
+                let contribNumSquare = document.createElement('div');
+                contribNumSquare.classList.add("square");
                 contribSection.appendChild(contDiv);
                 contDiv.appendChild(avatar);
-                contDiv.classList.add("contributor");
+                //display user ID as a link by creating a <a> tag and populating HTML
+                let userIDlink = document.createElement('p');
+                userIDlink.style.fontSize = '1rem'
+                contDiv.appendChild(userIDlink);
+                let a = document.createElement('a')
+                userIDlink.appendChild(a);
+                a.innerText = element.login;
+                a.href = element.html_url;
+                //setting the target attribute to the link so it opens in s seperate tab 
+                let att = document.createAttribute("target");
+                att.value = "_blank";
+                a.setAttributeNode(att);
+                contDiv.appendChild(userID);
+                //contributions number
+                contribNumSquare.appendChild(contribNum);
+                contDiv.appendChild(contribNumSquare);
+                contribNum.innerHTML = element.contributions;
                 avatar.src = element.avatar_url;
+                //styling
+                contDiv.classList.add("contributor");
+                avatar.classList.add("avatar");
+                userID.classList.add("user-id");
                 avatar.style.maxWidth = '50px';
+                userID.style.fontSize = '1rem';
+                contribNum.style.fontweight = '100';
 
                 //function to reset contributors data when selecting another repo from dropdown menu
-                function resetContrib(){
+                let resetContrib = () => {
                   contDiv.style.display = 'none';
                 }
                 //event listener on "change" for resetting
@@ -125,7 +175,7 @@ function main(){
     optionSelect.addEventListener('change', populateHTML);
   }) 
   
-  .catch(function(error){
+  .catch((error) => {
     console.log(error);
   })
 }

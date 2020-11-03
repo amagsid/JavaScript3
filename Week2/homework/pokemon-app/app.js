@@ -5,10 +5,11 @@ function main(){
     let button = document.getElementById('getPokemon');
     //grabbing the drop down menu elements
     let pokeSelect = document.getElementById('pokemonSelect');
+    pokeSelect.style
     pokeSelect.style.display = 'none';
     let showDropDown = () => pokeSelect.style.display = 'block';
     button.addEventListener('click',showDropDown);
-
+    
     //fetch data funtion
     function fetchData(){
         const pokeURL = `https://pokeapi.co/api/v2/pokemon?offset=20&limit=151`;
@@ -43,6 +44,9 @@ function main(){
                             document.body.appendChild(pokeImage);
                             let imgSource = jsonData.sprites.front_default;
                             pokeImage.src = imgSource;
+                            pokeImage.style.width = '300px'
+                            
+                        
                             //resetting the grabbed elements so they don't add up on top of each other
                             let reset = () => {
                             pokeImage.style.display = 'none';
