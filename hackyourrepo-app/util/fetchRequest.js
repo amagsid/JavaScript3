@@ -1,62 +1,18 @@
-"use strict";
+export function fetchRequest(){
 
-//main function
-let main = () => {
-  document.body.innerHTML += 
-  `<div class="container">
-
-<div id="headers"> 
-      <section class="header"> 
-        <p> HYF Repositories </p>
-        <select id="repo-select"> 
-          <option class="placeholder" value="" disabled selected hidden>Choose a repo..</option>
-        </select>
-      </section>
-      </div> 
-      
-      <div class="info">
-        <section class="info__details">
-          <table>
-            <tr>
-              <td class="table__header">Repository:</td>
-               <td class="repo__details" id="repo-name"><a id="repo-link">  </a>  </td> 
-            </tr>
-
-            <tr>
-              <td class="table__header">Description:</td>
-              <td class="repo__details"  id="repo-description"> </td>
-            </tr>
-
-            <tr>
-              <td class="table__header">Forks:</td>
-              <td class="repo__details"  id="repo-forks"> </td>
-            </tr>
-
-            <tr>
-              <td class="table__header">Updated:</td>
-              <td class="repo__details"  id="updated"> </td>
-            </tr>
-          </table>
-        </section>
+        //grabbing the drop down menu elements
+        let optionSelect = document.getElementById('repo-select');
+        //grabing HTML text elements to fill based on selection
+        let repoDescription = document.getElementById('repo-description');
+        let forksNumber = document.getElementById('repo-forks');
+        let dateUpdated = document.getElementById('updated');
+        //grabbing contributors HTML elements
+        let contribSection = document.getElementById('info__contributors');
+        //setting the initial color of the dropdown menu placeholder to grey
+        optionSelect.style.color = '#c6c6c6';
         
-        <section class="info__contributors" id="info__contributors"> 
-        <p> Contributors</p>
-        </section>
-      </div>
-    </div>`
-    
-    //grabbing the drop down menu elements
-    let optionSelect = document.getElementById('repo-select');
-    //grabing HTML text elements to fill based on selection
-    let repoDescription = document.getElementById('repo-description');
-    let forksNumber = document.getElementById('repo-forks');
-    let dateUpdated = document.getElementById('updated');
-    //grabbing contributors HTML elements
-    let contribSection = document.getElementById('info__contributors');
-    //setting the initial color of the dropdown menu placeholder to grey
-    optionSelect.style.color = '#c6c6c6';
     const GitHubURL = "https://api.github.com/orgs/HackYourFuture/repos?per_page=100";
-    
+
     fetch(GitHubURL)
     
     .then((response) => {
@@ -79,10 +35,10 @@ let main = () => {
   })
 
   
-  .then((jsonData)=> {
+  .then((jsonData)=> { 
     
     console.log(jsonData);
-
+    ////////function4 to populate HTML/////////
     let populateHTML = () => {
       //setting the color of the dropdown menu options to blue
       optionSelect.style.color = '#4253af';
@@ -169,15 +125,15 @@ let main = () => {
           }
           getContribResponse(element.name);
         }
+        //
       })
     }
     populateHTML()
     optionSelect.addEventListener('change', populateHTML);
   }) 
   
+  
   .catch((error) => {
     console.log(error);
   })
 }
-//Event listener
-document.addEventListener('DOMContentLoaded', main , false);
