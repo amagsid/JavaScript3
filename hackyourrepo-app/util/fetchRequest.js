@@ -9,7 +9,7 @@ export function fetchRequest(){
         //grabbing contributors HTML elements
         let contribSection = document.getElementById('info__contributors');
         //setting the initial color of the dropdown menu placeholder to grey
-        optionSelect.style.color = '#c6c6c6';
+        
         
     const GitHubURL = "https://api.github.com/orgs/HackYourFuture/repos?per_page=100";
 
@@ -31,19 +31,20 @@ export function fetchRequest(){
       errorDiv.classList.add("error");
       //error handling
       throw new Error('Something went wrong');
+      
     } 
   })
 
-  
+
+
   .then((jsonData)=> { 
-    
-    console.log(jsonData);
+  
     ////////function4 to populate HTML/////////
-    let populateHTML = () => {
+    const populateHTML = () => {
       //setting the color of the dropdown menu options to blue
       optionSelect.style.color = '#4253af';
 
-      //sorting thre response alphabetically
+      //sorting the response alphabetically
       jsonData.sort((a, b) => a.name.localeCompare(b.name));
 
       //function to iterate over array elements and show repo names in dropdown menu
@@ -71,13 +72,13 @@ export function fetchRequest(){
           let getContribResponse = (repo) => {
             const contribResponse = 'https://api.github.com/repos/HackYourFuture/'+repo+'/contributors';
             fetch(contribResponse)
-
+          
             .then((response) => {
               return response.json();
             })
             
             .then((jsonData) => {
-              console.log(jsonData);
+              
               jsonData.forEach((element)=> {
                 //create and append contributor div, img and p tag for useIDs
                 let contDiv = document.createElement('div');

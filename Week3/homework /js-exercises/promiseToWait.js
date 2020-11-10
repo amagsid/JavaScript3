@@ -1,6 +1,5 @@
 'use strict'
 
-
 // Exercise A
 async function getData(url) {
 
@@ -15,8 +14,9 @@ async function getData(url) {
     }
   }
   
-  await getData('https://randomfox.ca/floof/');
-  
+ getData('https://randomfox.ca/floof/');
+
+
   // Exercise B
   const arrayOfWords = ['cucumber', 'tomatos', 'avocado'];
   
@@ -32,7 +32,7 @@ async function getData(url) {
     
   };
   
-async function makeAllCaps(arrayOfWords) {
+ makeAllCaps(arrayOfWords) 
     try {
         console.log(result)
     }
@@ -40,6 +40,3 @@ async function makeAllCaps(arrayOfWords) {
     catch {
         console.log(error)
     }
-
-}
-    
