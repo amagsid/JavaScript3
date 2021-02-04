@@ -1,5 +1,5 @@
-//'use strict';
-//console.log(placeholderRepos);
+'use strict';
+
 const optionEl = document.getElementById('repo-select');
 const url = 'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
 
@@ -10,17 +10,20 @@ window.onload = async function main() {
       return `<option data-id="${repo.id}"> ${repo.name} </option>`;
     })
     .join('');
-};
-
-optionEl.addEventListener('change', async () => {
-  console.log(optionEl.value);
-  const repoData = await fetchData(
+  let repoData;
+  repoData = await fetchData(
     `https://api.github.com/repos/HackYourFuture/${optionEl.value}`,
   );
 
-  const { name, description, updated_at, forks, contributors_url } = repoData;
+  const { name, description, forks, updated_at, contributors_url } = repoData;
 
-  console.log(name, description, updated_at, forks, contributors_url);
+  createHTMLEls(name, description, forks, updated_at, contributors_url);
 
-  appendElementsToDom(repoData);
-});
+  optionEl.addEventListener('change', async () => {
+    repoData = await fetchData(
+      `https://api.github.com/repos/HackYourFuture/${optionEl.value}`,
+    );
+    const { name, description, forks, updated_at, contributors_url } = repoData;
+    createHTMLEls(name, description, forks, updated_at, contributors_url);
+  });
+};

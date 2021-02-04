@@ -75,11 +75,11 @@ select:focus {
   outline: none;
 }
 
-.info {
+.repo {
   display: flex;
 }
 
-.info__details {
+.repo__details {
   box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
   margin-right: 5px;
   line-height: 1.5;
@@ -88,33 +88,16 @@ select:focus {
   padding: 1rem;
 }
 
-.info__contributors {
-  flex-grow: 1;
-  margin-left: 5px;
-  flex-basis: 0;
-}
-
-.info__contributors p {
-  font-size: 1.5rem;
-  color: #4253af;
-  margin: 1rem;
-}
-
-.contributor {
+.repo__contributors {
   display: flex;
-  align-items: center;
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
-  margin-bottom: 0.5rem;
-  padding: 1rem;
-}
-
-.avatar {
-  flex-grow: 1;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 a {
   text-decoration: none;
   text-transform: uppercase;
+  min-width: 20px;
 }
 
 a {
@@ -123,7 +106,7 @@ a {
   padding: 0.25em 0.25em;
   /* text-decoration: none; */
   text-transform: uppercase;
-  border-radius: 7px;
+  border-radius: 3px;
 }
 
 a:hover {
@@ -139,28 +122,49 @@ a:visited {
   background-color: rgba(59, 153, 252, 0.7);
 }
 
-.user-id {
-  flex-grow: 2;
+.repo__contributors__El__img {
+  max-width: 10%;
+  transition: all 0.1s ease-in-out;
+}
+.repo__contributors__El__img:hover {
+  background-color: white;
+  color: #4253af;
+  transform: scale(1.8);
+  border-radius: 5px;
+  margin-right: 40px;
+  position: relative;
 }
 
-.square {
+.repo__contributors__El__name {
+  padding-left: 15px;
+}
+
+.repo__contributors__El {
+  display: flex;
+  align-items: center;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  position: relative;
+}
+.repo__contributors__El__Contributionsnumber {
+  position: absolute;
+  margin-right: 30px;
   background-color: #4253af;
-  max-width: 40px;
+  right: 0;
+  min-width: 40px;
+
   border-radius: 5px;
   text-align: center;
-  color: white;
+  color: rgb(255, 255, 255);
   flex-grow: 1;
 }
 
-tr {
-  display: flex;
+h3 {
+  font-weight: 500;
 }
 
-td {
-  padding: 0.5rem;
-}
-
-.table__header {
+h3 span {
   font-weight: 600;
   color: #4253af;
 }
